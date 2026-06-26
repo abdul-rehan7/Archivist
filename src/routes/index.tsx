@@ -37,24 +37,19 @@ function Landing() {
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl animate-[fade-in_0.6s_ease-out_both] md:m-4 md:rounded-[3px] md:border md:border-border/40 md:shadow-lg md:backdrop-blur-2xl md:bg-[rgba(240,255,245,0.08)]">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <a href="#" className="flex items-center gap-2 font-semibold tracking-tight">
-          <span className="grid h-7 w-7 place-items-center rounded-md border border-primary/40 bg-primary/10 text-primary">
-            <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M4 7h16M4 12h16M4 17h10" strokeLinecap="round" />
-            </svg>
-          </span>
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl animate-[fade-in_0.6s_ease-out_both] md:fixed md:top-1 md:inset-x-0 md:mx-auto md:max-w-5xl md:z-50 md:m-0 md:rounded-[3px] md:border md:border-border/40 md:shadow-lg md:backdrop-blur-2xl md:bg-[rgba(240,255,245,0.08)]">
+      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 md:px-4 md:py-2">
+        <a href="#" className="font-semibold tracking-tight md:text-white">
           Archivist
         </a>
-        <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-          <a href="#features" className="transition-colors hover:text-foreground">Features</a>
-          <a href="#workflow" className="transition-colors hover:text-foreground">Workflow</a>
-          <a href="#pricing" className="transition-colors hover:text-foreground">Pricing</a>
+        <nav className="hidden items-center gap-8 text-sm md:flex">
+          <a href="#features" className="transition-colors md:text-white/80 hover:text-white">Features</a>
+          <a href="#workflow" className="transition-colors md:text-white/80 hover:text-white">Workflow</a>
+          <a href="#pricing" className="transition-colors md:text-white/80 hover:text-white">Pricing</a>
         </nav>
         <a
           href="#cta"
-          className="rounded-md border border-border px-3.5 py-1.5 text-sm text-foreground/90 transition-colors hover:border-primary/60 hover:text-primary"
+          className="rounded-md border border-border px-3.5 py-1.5 text-sm text-foreground/90 transition-colors hover:border-primary/60 hover:text-primary md:border-white/20 md:text-white/80 md:hover:border-white/60 md:hover:text-white"
         >
           Sign in
         </a>
