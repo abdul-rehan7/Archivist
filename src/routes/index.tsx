@@ -37,7 +37,7 @@ function Landing() {
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl animate-[fade-in_0.6s_ease-out_both]">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl animate-[fade-in_0.6s_ease-out_both] md:m-4 md:rounded-[3px] md:border md:border-border/40 md:shadow-lg md:backdrop-blur-2xl md:bg-[rgba(240,255,245,0.08)]">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <a href="#" className="flex items-center gap-2 font-semibold tracking-tight">
           <span className="grid h-7 w-7 place-items-center rounded-md border border-primary/40 bg-primary/10 text-primary">
@@ -66,13 +66,23 @@ function Nav() {
 function Hero() {
   return (
     <section className="relative overflow-hidden">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover hidden md:block"
+      >
+        <source src="/herobg.mp4" type="video/mp4" />
+      </video>
+
       <div className="absolute inset-0 grid-bg pointer-events-none" aria-hidden />
       <div
         className="pointer-events-none absolute left-1/2 top-0 -z-0 h-[480px] w-[820px] -translate-x-1/2 rounded-full opacity-30 blur-3xl"
         style={{ background: "radial-gradient(closest-side, #00FF85, transparent 70%)" }}
         aria-hidden
       />
-      <div className="mx-auto max-w-3xl px-6 pb-24 pt-28 text-center sm:pt-36">
+      <div className="mx-4 max-w-3xl px-6 pb-24 pt-28 text-center md:text-left sm:pt-36 md:pb-20 md:pt-28">
 
         <h1
           className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.05s_both] text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl"
@@ -81,13 +91,13 @@ function Hero() {
           <span className="text-accent-glow">Tomorrow's Builders.</span>
         </h1>
 
-        <p className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.15s_both] mx-auto mt-6 max-w-xl text-pretty text-base text-muted-foreground sm:text-lg">
+        <p className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.15s_both] mx-auto mt-6 max-w-xl text-pretty text-base text-muted-foreground sm:text-lg md:mx-0 md:mt-4">
           Document the work, ship the proof. A single, focused workspace to capture
           your engineering, structure your case studies, and publish a portfolio that
           actually reflects how you think.
         </p>
 
-        <div className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.25s_both] mt-10 flex flex-col items-center justify-center gap-4">
+        <div className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.25s_both] mt-10 flex flex-col items-center justify-center gap-4 md:items-start md:mt-8">
           <a
             href="#cta"
             className="group inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-[0_0_40px_-8px_var(--accent-glow)] transition-all hover:shadow-[0_0_60px_-4px_var(--accent-glow)] hover:-translate-y-0.5"
