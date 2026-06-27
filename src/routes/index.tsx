@@ -43,8 +43,7 @@ function Nav() {
   useEffect(() => {
     if (window.innerWidth >= 768) return;
     function onScroll() {
-      const y = window.scrollY;
-      setGlass(Math.min(y / 80, 1));
+      setGlass(Math.min(window.scrollY / 80, 1));
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -54,24 +53,14 @@ function Nav() {
 
   return (
     <>
-    <header className="fixed left-1/2 z-30 flex w-full max-w-7xl -translate-x-1/2 items-center justify-between px-6 py-2 animate-[fade-in_0.6s_ease-out_both] top-5" style={glass > 0 ? { top: `${20 - glass * 20}px` } : undefined}>
+    <header className="flex w-full items-center justify-between bg-transparent p-4 animate-[fade-in_0.6s_ease-out_both] max-md:fixed max-md:left-0 max-md:top-0 max-md:z-30 md:absolute md:top-0 md:left-0 md:z-30">
       <div
-        className="absolute inset-0 -z-10 border-b border-white/10 bg-[#0D1117]/95 shadow-lg backdrop-blur-2xl transition-none md:hidden"
+        className="absolute inset-0 -z-10 border-b border-white/10 bg-[#0D1117]/95 shadow-lg backdrop-blur-2xl transition-none max-md:block hidden"
         style={{ opacity: glass }}
       />
-      <a href="#" className="font-semibold tracking-tight text-white" onClick={close}>
+      <a href="#" className="font-semibold tracking-tight text-white text-xl" onClick={close}>
         Archivist
       </a>
-
-      <div className="hidden md:block">
-        <div className="fixed left-1/2 top-5 w-[50vw] -translate-x-1/2 rounded-full border border-white/10 bg-[#161C25]/90 px-6 py-3 shadow-lg backdrop-blur-2xl">
-          <nav className="flex items-center justify-center gap-8 text-sm">
-            <a href="#features" className="text-white/70 transition-colors hover:text-white">Features</a>
-            <a href="#workflow" className="text-white/70 transition-colors hover:text-white">Workflow</a>
-            <a href="#pricing" className="text-white/70 transition-colors hover:text-white">Pricing</a>
-          </nav>
-        </div>
-      </div>
 
       <a
         href="#cta"
@@ -82,7 +71,7 @@ function Nav() {
 
       <button
         onClick={() => setOpen(!open)}
-        className="md:hidden relative z-[60] inline-flex items-center justify-center rounded-md p-2 mt-1 text-white"
+        className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-white"
         aria-label="Toggle menu"
       >
         <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
