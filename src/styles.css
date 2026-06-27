@@ -67,7 +67,6 @@
   --muted-foreground: oklch(0.65 0.015 260);
   --accent: oklch(0.88 0.25 152);
   --accent-foreground: oklch(0.15 0.02 260);
-  --accent-glow: color-mix(in oklab, oklch(0.88 0.25 152) 45%, transparent);
   --destructive: oklch(0.65 0.22 25);
   --destructive-foreground: oklch(0.98 0.005 260);
   --border: oklch(1 0 0 / 8%);
@@ -83,18 +82,17 @@
   --card-foreground: #E6EDF3;
   --popover: #0F151D;
   --popover-foreground: #E6EDF3;
-  --primary: #00FF85;
+  --primary: #48A111;
   --primary-foreground: #03110A;
-  --accent: #00FF85;
+  --accent: #48A111;
   --accent-foreground: #03110A;
-  --accent-glow: rgba(0, 255, 133, 0.35);
   --secondary: #161C25;
   --secondary-foreground: #E6EDF3;
   --muted: #161C25;
-  --muted-foreground: #8B949E;
+  --muted-foreground: #B0B8C4;
   --border: rgba(255, 255, 255, 0.06);
   --input: rgba(255, 255, 255, 0.08);
-  --ring: #00FF85;
+  --ring: #48A111;
 }
 
 @layer base {
@@ -118,7 +116,13 @@
   mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 30%, transparent 80%);
 }
 
-@utility text-accent-glow {
-  color: var(--accent);
-  text-shadow: 0 0 28px var(--accent-glow);
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
+
+@utility animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+

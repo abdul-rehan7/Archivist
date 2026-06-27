@@ -16,6 +16,7 @@ export const Route = createFileRoute("/")({
         content:
           "Document, showcase, and ship. Build your professional engineering portfolio with Archivist.",
       },
+      { property: "og:image", content: "/logo-2.png" },
     ],
   }),
   component: Landing,
@@ -23,7 +24,16 @@ export const Route = createFileRoute("/")({
 
 function Landing() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="relative min-h-screen bg-background text-foreground">
+      <div
+        className="pointer-events-none fixed inset-0 z-0 opacity-40"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 80% at 50% 100%, rgba(72,161,17,0.18), transparent 70%)",
+        }}
+        aria-hidden
+      />
+      <div className="relative z-10">
       <Nav />
       <Hero />
       <Logos />
@@ -32,6 +42,7 @@ function Landing() {
       <Testimonial />
       <CTA />
       <Footer />
+      </div>
     </main>
   );
 }
@@ -58,13 +69,13 @@ function Nav() {
         className="absolute inset-0 -z-10 border-b border-white/10 bg-[#0D1117]/95 shadow-lg backdrop-blur-2xl transition-none max-md:block hidden"
         style={{ opacity: glass }}
       />
-      <a href="#" className="font-semibold tracking-tight text-white text-xl" onClick={close}>
-        Archivist
+      <a href="#" onClick={close}>
+        <img src="/logo-5.png" alt="Archivist" className="h-8 w-auto" />
       </a>
 
       <a
         href="#cta"
-        className="hidden md:inline-flex rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_-4px_var(--accent-glow)]"
+        className="hidden md:inline-flex rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:scale-105 hover:-translate-y-0.5"
       >
         Get Started
       </a>
@@ -99,7 +110,7 @@ function Nav() {
       <a href="#pricing" className="text-white/70 transition-colors hover:text-white" onClick={close}>Pricing</a>
       <a
         href="#cta"
-        className="mt-4 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_40px_-8px_var(--accent-glow)] transition-all hover:shadow-[0_0_60px_-4px_var(--accent-glow)]"
+        className="mt-4 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:scale-105 hover:-translate-y-0.5"
         onClick={close}
       >
         Get Started
@@ -117,16 +128,16 @@ function Hero() {
         loop
         muted
         playsInline
-        className="absolute inset-0 z-0 h-full w-full object-cover hidden md:block"
+        className="absolute inset-0 z-0 h-full w-full object-cover block"
       >
         <source src="/herobg.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-black/50 hidden md:block" />
+      <div className="absolute inset-0 bg-black/70 block" />
 
       <div className="absolute inset-0 grid-bg pointer-events-none" aria-hidden />
       <div
         className="pointer-events-none absolute left-1/2 top-0 -z-0 h-[480px] w-[820px] -translate-x-1/2 rounded-full opacity-30 blur-3xl"
-        style={{ background: "radial-gradient(closest-side, #00FF85, transparent 70%)" }}
+        style={{ background: "radial-gradient(closest-side, #48A111, transparent 70%)" }}
         aria-hidden
       />
       <div className="px-4 w-full pb-24 pt-24 text-left md:max-w-[60vw] md:px-0 md:ml-5 md:pb-20">
@@ -135,10 +146,10 @@ function Hero() {
           className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.05s_both] text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl"
         >
           The Engineering Workspace for{" "}
-          <span className="text-accent-glow">Tomorrow's Builders.</span>
+          <span className="text-accent">Tomorrow's Builders.</span>
         </h1>
 
-        <p className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.15s_both] mt-6 max-w-lg text-pretty text-base text-muted-foreground sm:text-lg md:mt-4">
+        <p className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.15s_both] mt-6 max-w-lg text-pretty text-base text-white/70 sm:text-lg md:mt-4">
           Document the work, ship the proof. A single, focused workspace to capture
           your engineering, structure your case studies, and publish a portfolio that
           actually reflects how you think.
@@ -147,7 +158,7 @@ function Hero() {
         <div className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.25s_both] mt-10 flex flex-col items-start gap-4 md:mt-8">
           <a
             href="#cta"
-            className="group inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-[0_0_40px_-8px_var(--accent-glow)] transition-all hover:shadow-[0_0_60px_-4px_var(--accent-glow)] hover:-translate-y-0.5"
+            className="group inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:scale-105 hover:-translate-y-0.5"
           >
             Get Started
             <svg viewBox="0 0 24 24" className="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -162,17 +173,40 @@ function Hero() {
 }
 
 function Logos() {
-  const items = ["Vercel", "Linear", "Supabase", "Stripe", "Anthropic", "Cloudflare"];
+  const modules = import.meta.glob("/src/assets/partners/*.{png,jpg,jpeg,svg,webp}", {
+    eager: true,
+    query: "?url",
+  });
+  const logos = Object.values(modules).map((m: any) => m.default || m);
   return (
-    <section className="border-y border-border/60 bg-secondary/20">
-      <div className="mx-auto max-w-5xl px-6 py-10">
-        <p className="mb-6 text-center text-xs uppercase tracking-[0.2em] text-muted-foreground">
+    <section className="border-y border-border/60 bg-secondary/20 overflow-hidden">
+      <div className="mx-auto max-w-7xl px-6 py-12">
+        <p className="mb-8 text-center text-sm uppercase tracking-[0.2em] text-muted-foreground">
           Trusted by engineers shipping at
         </p>
-        <div className="grid grid-cols-3 gap-x-8 gap-y-4 text-center text-sm font-medium text-muted-foreground/80 sm:grid-cols-6">
-          {items.map((i) => (
-            <span key={i} className="transition-colors hover:text-foreground">{i}</span>
-          ))}
+        <div className="relative flex overflow-hidden">
+          <div className="flex animate-marquee items-center shrink-0">
+            <div className="flex items-center shrink-0">
+              {logos.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={`Partner ${i + 1}`}
+                  className="h-14 w-auto mx-10 grayscale brightness-0 invert opacity-40 hover:opacity-70 transition-all duration-500 shrink-0"
+                />
+              ))}
+            </div>
+            <div className="flex items-center shrink-0">
+              {logos.map((src, i) => (
+                <img
+                  key={i + logos.length}
+                  src={src}
+                  alt={`Partner ${i + 1}`}
+                  className="h-14 w-auto mx-10 grayscale brightness-0 invert opacity-40 hover:opacity-70 transition-all duration-500 shrink-0"
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -304,7 +338,7 @@ function CTA() {
         </p>
         <a
           href="#"
-          className="relative mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-[0_0_40px_-8px_var(--accent-glow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_0_60px_-4px_var(--accent-glow)]"
+          className="relative mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:scale-105 hover:-translate-y-0.5"
         >
           Get Started
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
