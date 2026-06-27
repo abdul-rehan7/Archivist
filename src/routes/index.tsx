@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Archivist — The Engineering Workspace for Tomorrow's Builders" },
+      { title: "Archivist - The Engineering Workspace for Tomorrow's Builders" },
       {
         name: "description",
         content:
           "Archivist is the engineering workspace where builders document, showcase, and ship their professional portfolio.",
       },
-      { property: "og:title", content: "Archivist — Engineering Workspace for Builders" },
+      { property: "og:title", content: "Archivist - Engineering Workspace for Builders" },
       {
         property: "og:description",
         content:
@@ -64,7 +64,7 @@ function Nav() {
       </a>
 
       <div className="hidden md:block">
-        <div className="fixed left-1/2 top-5 w-[50vw] -translate-x-1/2 rounded-full border border-white/10 bg-[#161C25]/80 px-6 py-3 shadow-lg backdrop-blur-2xl">
+        <div className="fixed left-1/2 top-5 w-[50vw] -translate-x-1/2 rounded-full border border-white/10 bg-[#161C25]/90 px-6 py-3 shadow-lg backdrop-blur-2xl">
           <nav className="flex items-center justify-center gap-8 text-sm">
             <a href="#features" className="text-white/70 transition-colors hover:text-white">Features</a>
             <a href="#workflow" className="text-white/70 transition-colors hover:text-white">Workflow</a>
