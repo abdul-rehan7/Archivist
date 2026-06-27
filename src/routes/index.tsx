@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,40 +37,102 @@ function Landing() {
 }
 
 function Nav() {
+  const [open, setOpen] = useState(false);
+  const [glass, setGlass] = useState(0);
+
+  useEffect(() => {
+    if (window.innerWidth >= 768) return;
+    function onScroll() {
+      const y = window.scrollY;
+      setGlass(Math.min(y / 80, 1));
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  function close() { setOpen(false) }
+
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/70 backdrop-blur-xl animate-[fade-in_0.6s_ease-out_both] md:fixed md:top-1 md:inset-x-0 md:mx-auto md:max-w-5xl md:z-50 md:m-0 md:rounded-[3px] md:border md:border-border/40 md:shadow-lg md:backdrop-blur-2xl md:bg-[rgba(240,255,245,0.08)]">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 md:px-4 md:py-2">
-        <a href="#" className="font-semibold tracking-tight md:text-white">
-          Archivist
-        </a>
-        <nav className="hidden items-center gap-8 text-sm md:flex">
-          <a href="#features" className="transition-colors md:text-white/80 hover:text-white">Features</a>
-          <a href="#workflow" className="transition-colors md:text-white/80 hover:text-white">Workflow</a>
-          <a href="#pricing" className="transition-colors md:text-white/80 hover:text-white">Pricing</a>
-        </nav>
-        <a
-          href="#cta"
-          className="rounded-md border border-border px-3.5 py-1.5 text-sm text-foreground/90 transition-colors hover:border-primary/60 hover:text-primary md:border-white/20 md:text-white/80 md:hover:border-white/60 md:hover:text-white"
-        >
-          Sign in
-        </a>
+    <>
+    <header className="fixed left-1/2 z-30 flex w-full max-w-7xl -translate-x-1/2 items-center justify-between px-6 py-2 animate-[fade-in_0.6s_ease-out_both] top-5" style={glass > 0 ? { top: `${20 - glass * 20}px` } : undefined}>
+      <div
+        className="absolute inset-0 -z-10 border-b border-white/10 bg-[#0D1117]/95 shadow-lg backdrop-blur-2xl transition-none md:hidden"
+        style={{ opacity: glass }}
+      />
+      <a href="#" className="font-semibold tracking-tight text-white" onClick={close}>
+        Archivist
+      </a>
+
+      <div className="hidden md:block">
+        <div className="fixed left-1/2 top-5 w-[50vw] -translate-x-1/2 rounded-full border border-white/10 bg-[#161C25]/80 px-6 py-3 shadow-lg backdrop-blur-2xl">
+          <nav className="flex items-center justify-center gap-8 text-sm">
+            <a href="#features" className="text-white/70 transition-colors hover:text-white">Features</a>
+            <a href="#workflow" className="text-white/70 transition-colors hover:text-white">Workflow</a>
+            <a href="#pricing" className="text-white/70 transition-colors hover:text-white">Pricing</a>
+          </nav>
+        </div>
       </div>
+
+      <a
+        href="#cta"
+        className="hidden md:inline-flex rounded-full bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-[0_0_24px_-4px_var(--accent-glow)]"
+      >
+        Get Started
+      </a>
+
+      <button
+        onClick={() => setOpen(!open)}
+        className="md:hidden relative z-[60] inline-flex items-center justify-center rounded-md p-2 mt-1 text-white"
+        aria-label="Toggle menu"
+      >
+        <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
+        </svg>
+      </button>
     </header>
+
+    <div
+      className={`fixed inset-0 z-40 transition-opacity duration-300 md:hidden ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      onClick={close}
+    />
+
+    <nav
+      className={`fixed right-0 top-0 z-50 flex h-dvh w-64 flex-col justify-start pt-20 gap-8 border-l border-white/10 bg-[#0D1117]/95 p-6 shadow-2xl backdrop-blur-2xl transition-transform duration-300 md:hidden ${open ? "translate-x-0" : "translate-x-full"}`}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button onClick={close} className="absolute right-4 top-4 text-white/70 hover:text-white" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" />
+        </svg>
+      </button>
+      <a href="#features" className="text-white/70 transition-colors hover:text-white" onClick={close}>Features</a>
+      <a href="#workflow" className="text-white/70 transition-colors hover:text-white" onClick={close}>Workflow</a>
+      <a href="#pricing" className="text-white/70 transition-colors hover:text-white" onClick={close}>Pricing</a>
+      <a
+        href="#cta"
+        className="mt-4 inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-[0_0_40px_-8px_var(--accent-glow)] transition-all hover:shadow-[0_0_60px_-4px_var(--accent-glow)]"
+        onClick={close}
+      >
+        Get Started
+      </a>
+      </nav>
+    </>
   );
 }
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative flex min-h-screen flex-col items-start justify-center overflow-hidden">
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 h-full w-full object-cover hidden md:block"
+        className="absolute inset-0 z-0 h-full w-full object-cover hidden md:block"
       >
         <source src="/herobg.mp4" type="video/mp4" />
       </video>
+      <div className="absolute inset-0 bg-black/50 hidden md:block" />
 
       <div className="absolute inset-0 grid-bg pointer-events-none" aria-hidden />
       <div
@@ -77,27 +140,27 @@ function Hero() {
         style={{ background: "radial-gradient(closest-side, #00FF85, transparent 70%)" }}
         aria-hidden
       />
-      <div className="mx-4 max-w-3xl px-6 pb-24 pt-28 text-center md:text-left sm:pt-36 md:pb-20 md:pt-28">
+      <div className="px-4 w-full pb-24 pt-24 text-left md:max-w-[60vw] md:px-0 md:ml-5 md:pb-20">
 
         <h1
           className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.05s_both] text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl"
         >
-          Archivist: The Engineering Workspace for{" "}
+          The Engineering Workspace for{" "}
           <span className="text-accent-glow">Tomorrow's Builders.</span>
         </h1>
 
-        <p className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.15s_both] mx-auto mt-6 max-w-xl text-pretty text-base text-muted-foreground sm:text-lg md:mx-0 md:mt-4">
+        <p className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.15s_both] mt-6 max-w-lg text-pretty text-base text-muted-foreground sm:text-lg md:mt-4">
           Document the work, ship the proof. A single, focused workspace to capture
           your engineering, structure your case studies, and publish a portfolio that
           actually reflects how you think.
         </p>
 
-        <div className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.25s_both] mt-10 flex flex-col items-center justify-center gap-4 md:items-start md:mt-8">
+        <div className="animate-[fade-up_0.8s_cubic-bezier(0.16,1,0.3,1)_0.25s_both] mt-10 flex flex-col items-start gap-4 md:mt-8">
           <a
             href="#cta"
             className="group inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-[0_0_40px_-8px_var(--accent-glow)] transition-all hover:shadow-[0_0_60px_-4px_var(--accent-glow)] hover:-translate-y-0.5"
           >
-            Build Your Professional Portfolio
+            Get Started
             <svg viewBox="0 0 24 24" className="h-4 w-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -152,7 +215,7 @@ function Features() {
     },
   ];
   return (
-    <section id="features" className="mx-auto max-w-5xl px-6 py-28">
+    <section id="features" className="bg-background mx-auto max-w-5xl px-6 py-28">
       <div className="mb-16 max-w-2xl">
         <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Workspace</p>
         <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -217,7 +280,7 @@ function Workflow() {
 
 function Testimonial() {
   return (
-    <section className="mx-auto max-w-3xl px-6 py-28 text-center">
+    <section className="bg-background mx-auto max-w-3xl px-6 py-28 text-center">
       <svg viewBox="0 0 24 24" className="mx-auto mb-6 h-6 w-6 text-primary" fill="currentColor">
         <path d="M9 7H5a2 2 0 00-2 2v4a2 2 0 002 2h2v2a2 2 0 01-2 2H4v2h1a4 4 0 004-4V7zm10 0h-4a2 2 0 00-2 2v4a2 2 0 002 2h2v2a2 2 0 01-2 2h-1v2h1a4 4 0 004-4V7z" />
       </svg>
@@ -234,7 +297,7 @@ function Testimonial() {
 
 function CTA() {
   return (
-    <section id="cta" className="px-6 pb-28">
+    <section id="cta" className="bg-background px-6 pb-28">
       <div className="relative mx-auto max-w-3xl overflow-hidden rounded-2xl border border-border bg-card px-8 py-16 text-center">
         <div
           className="pointer-events-none absolute inset-0 opacity-40"
@@ -254,7 +317,7 @@ function CTA() {
           href="#"
           className="relative mt-8 inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-[0_0_40px_-8px_var(--accent-glow)] transition-all hover:-translate-y-0.5 hover:shadow-[0_0_60px_-4px_var(--accent-glow)]"
         >
-          Build Your Professional Portfolio
+          Get Started
           <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -266,7 +329,7 @@ function CTA() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border/60">
+    <footer className="bg-background border-t border-border/60">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-10 text-xs text-muted-foreground sm:flex-row">
         <p>© {new Date().getFullYear()} Archivist Labs. All rights reserved.</p>
         <p className="font-mono">v0.4 — built for builders.</p>

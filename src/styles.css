@@ -45,6 +45,10 @@
     0%, 100% { box-shadow: 0 0 24px -4px var(--accent-glow), 0 0 0 0 transparent; }
     50% { box-shadow: 0 0 48px -2px var(--accent-glow), 0 0 0 0 transparent; }
   }
+  @keyframes slide-in {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
 }
 
 :root {
